@@ -11,7 +11,9 @@ function walk(obj) {
 	if (isArray(obj)) { return map(obj, walk); }
 	return reduce(objectKeys(obj), function (acc, key) {
 		var camel = camelCase(key);
-		acc[camel] = walk(obj[key]);
+		if (camel !== "__proto__" && camel != "constructor" && camel != "prototype") {
+			acc[camel] = walk(obj[key]);
+		}
 		return acc;
 	}, {});
 }
